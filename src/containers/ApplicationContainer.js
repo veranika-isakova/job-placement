@@ -1,23 +1,30 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import Title from '../components/Title'
+import ApplicationItem from './ApplicationItem'
 
 class ApplicationContainer extends PureComponent {
   renderApplication(application, index) {
-    return null // this will come later
+    return (
+    <ApplicationItem className="application-item" key={index} {...application} />
+  )
   }
 
   render() {
+    const { applications } = this.props
     return(
       <div className="application wrapper">
         <header>
           <Title content="All applications" />
         </header>
         <main>
-          { this.props.applications.map(this.renderApplication) }
+          { applications.map(this.renderApplication) }
         </main>
       </div>
     )
   }
 }
 
-export default ApplicationContainer
+const mapStateToProps = ({ applications }) => ({ applications })
+
+export default connect(mapStateToProps)(ApplicationContainer)
