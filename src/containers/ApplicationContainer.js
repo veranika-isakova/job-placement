@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { fetch as fetchApplications } from '../actions/applications'
 import Title from '../components/Title'
 import ApplicationItem from './ApplicationItem'
+import ApplicationEditor from './ApplicationEditor'
 
 class ApplicationContainer extends PureComponent {
+  componentWillMount() {
+    this.props.dispatch(fetchApplications())
+}
   renderApplication(application, index) {
     return (
     <ApplicationItem className="application-item" key={index} {...application} />
@@ -14,6 +19,7 @@ class ApplicationContainer extends PureComponent {
     const { applications } = this.props
     return(
       <div className="application wrapper">
+      <ApplicationEditor />
         <header>
           <Title content="All applications" />
         </header>

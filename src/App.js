@@ -1,17 +1,21 @@
-import React, { Component } from 'react';
-import ApplicationContainer from './containers/ApplicationContainer'
-import './App.css';
+
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+//import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+//import muiTheme from './styles/theme'
+import Routes from './routes'
 
 class App extends Component {
+
   render() {
     return (
-      <div className="App">
-        <div>
-        <ApplicationContainer applications={ [] } />
+
+        <div className="App">
+          <Routes />
         </div>
-      </div>
-    );
+
+    )
   }
 }
 
-export default App;
+export default App

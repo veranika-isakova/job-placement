@@ -32,7 +32,7 @@ export class ApplicationItem extends PureComponent {
           <p>Vacancy: {vacancyName}</p>
           <p>City: {city}</p>
           <p>Date of the application: { new Date(dateOfApplication).toLocaleDateString("nl-NL") }</p>
-          <p>Link to the vacany: {vacancyUrl}</p>
+          <p>Link to the vacancy: {vacancyUrl}</p>
         </div>
 
       </article>
