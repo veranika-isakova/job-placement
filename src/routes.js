@@ -8,7 +8,6 @@ export default class Routes extends Component {
     return (
       <div>
         <Route exact path="/" component={ApplicationContainer} />
-
       </div>
     )
   }
