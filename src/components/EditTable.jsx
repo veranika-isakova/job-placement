@@ -28,6 +28,12 @@ module.exports = createReactClass({
     }
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if(this.props.rows !== nextProps.rows) {
+      this.setState({rows: nextProps.rows})
+    }
+  },
+
   contextTypes: {
     muiTheme: PropTypes.object.isRequired
   },
@@ -274,6 +280,7 @@ module.exports = createReactClass({
       marginTop: 10
     }
 
+    console.log('inside table', this.state.rows)
     const rows = this.state.rows
     const columnTypes = this.props.headerColumns.map((header) => {
       return header.type

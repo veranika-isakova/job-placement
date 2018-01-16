@@ -1,23 +1,55 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { fetch as fetchApplications } from '../actions/applications'
+import { create as createApplication } from '../actions/applications'
 import Title from '../components/Title'
-import ApplicationItem from './ApplicationItem'
-import ApplicationEditor from './ApplicationEditor'
 import EditTable from '../components/EditTable'
 import {PropTypes} from 'prop-types'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { baseTheme } from 'material-ui/styles/baseThemes/darkBaseTheme'
 
 class ApplicationContainer extends PureComponent {
-  componentWillMount() {
-    this.props.dispatch(fetchApplications())
-}
-  renderApplication(application, index) {
-    return (
-    <ApplicationItem className="application-item" key={index} {...application} />
-  )
+  constructor(props) {
+
+    super(props)
+    this.state = {
+      selectedApplications: []
+    }
   }
+
+  componentWillMount() {
+    this.props.fetchApplications()
+  }
+
+  componentWillReceiveProps(nextProps) {
+  if (this.props.applications !== nextProps.applications) {
+    const newSelectedApplications = [];
+
+    console.log(nextProps.applications);
+    nextProps.applications.forEach(app => {
+      var companyNameColumn = {value: app.companyName}
+      var vacancyNameColumn = {value: app.vacancyName}
+      var cityColumn = {value: app.city}
+      var dateOfApplicationColumn = {value: new Date()}
+      var vacancyUrlColumn = {value: app.vacancyUrl}
+      var activityColumn = {value: app.activity}
+
+      var newApplication = {columns: [
+        companyNameColumn,
+        vacancyNameColumn,
+        cityColumn,
+        dateOfApplicationColumn,
+        vacancyUrlColumn,
+        activityColumn
+      ]}
+
+      newSelectedApplications.push(newApplication)
+    });
+    this.setState({
+      selectedApplications: newSelectedApplications
+    });
+  }
+}
   getChildContext () {
     return {muiTheme: getMuiTheme(baseTheme)}
   }
@@ -32,22 +64,32 @@ class ApplicationContainer extends PureComponent {
       {value: 'Vacancy', type: 'TextField', width: 200},
       {value: 'City', type: 'TextField', width: 150},
       {value: 'Date of application', type: 'DatePicker', width: 200},
-      {value: 'Web-site', type: 'TextField', width: 200},
+      {value: 'Link', type: 'TextField', width: 200},
       {value: 'Active', type: 'Toggle', width: 50},
     ]
 
-
     const onChange = (row) => {
-      console.log(row)
+      //console.log('onChange', row)
+      //console.table(this.state)
+      const application = {
+        companyName: row.columns[0].value,
+        vacancyName: row.columns[1].value,
+        city: row.columns[2].value,
+        dateOfApplication: row.columns[3].value,
+        vacancyUrl: row.columns[4].value,
+        activity: row.columns[5].value
+      }
+      this.props.save(application)
     }
 
     const onDelete = (e) => {
       console.log(e)
     }
-
+    console.log('apps', this.state.selectedApplications)
     return(
+
       <div className="application wrapper">
-      <ApplicationEditor />
+
         <header>
           <Title content="All applications" />
         </header>
@@ -55,7 +97,7 @@ class ApplicationContainer extends PureComponent {
         <EditTable
           onChange={onChange}
           onDelete={onDelete}
-          rows={this.props.applications}
+          rows={this.state.selectedApplications}
           headerColumns={headers}
           enableDelete={true}
         />
@@ -67,4 +109,7 @@ class ApplicationContainer extends PureComponent {
 
 const mapStateToProps = ({ applications }) => ({ applications })
 
-export default connect(mapStateToProps)(ApplicationContainer)
+const mapDispatchToProps = { save : createApplication, fetchApplications: fetchApplications }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationContainer)

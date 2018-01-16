@@ -1,8 +1,10 @@
 .Title {
   font-family: 'Courier';
   font-size: 3em;
-  padding: 10px 2em;
+  padding: 10px;
+  text-align: center;
   margin: 0;
+  margin-bottom: 60px;
   color: #4e4e4e; }
   .Title.level-2 {
     font-size: 2em;

@@ -1,8 +1,8 @@
 import fetch, { FETCHED_APPLICATIONS } from './fetch'
-import create, { CREATE_APPLICATION } from './create'
+import create, { CREATED_APPLICATION } from './create'
 
 export {
-  CREATE_APPLICATION,
+  CREATED_APPLICATION,
   FETCHED_APPLICATIONS,
   create,
   fetch

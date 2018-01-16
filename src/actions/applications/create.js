@@ -1,5 +1,5 @@
 import ApiClient from '../../api/client'
-export const CREATE_APPLICATION = 'CREATE_APPLICATION'
+export const CREATED_APPLICATION = 'CREATED_APPLICATION'
 
 const api = new ApiClient()
 
@@ -9,7 +9,7 @@ export default (newApplication) => {
 			.post("applications", newApplication)
       .then((res) => {
         dispatch({
-					type: CREATE_APPLICATION,
+					type: CREATED_APPLICATION,
 					payload: res.body
 				});
       })
