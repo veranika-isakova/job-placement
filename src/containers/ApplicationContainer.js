@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { fetch as fetchApplications } from '../actions/applications'
 import { create as createApplication } from '../actions/applications'
+import { update as updateApplication } from '../actions/applications'
 import Title from '../components/Title'
 import EditTable from '../components/EditTable'
 import {PropTypes} from 'prop-types'
@@ -41,9 +42,10 @@ class ApplicationContainer extends PureComponent {
         dateOfApplicationColumn,
         vacancyUrlColumn,
         activityColumn
-      ]}
-
-      newSelectedApplications.push(newApplication)
+      ], _id: app._id}
+      if (newApplication !== undefined) {
+        newSelectedApplications.push(newApplication);
+      }
     });
     this.setState({
       selectedApplications: newSelectedApplications
@@ -77,9 +79,13 @@ class ApplicationContainer extends PureComponent {
         city: row.columns[2].value,
         dateOfApplication: row.columns[3].value,
         vacancyUrl: row.columns[4].value,
-        activity: row.columns[5].value
+        activity: row.columns[5].value,
       }
-      this.props.save(application)
+      if (row._id === undefined) {
+        this.props.save(application)
+      } else {
+        this.props.update(row._id, application)
+      }
     }
 
     const onDelete = (e) => {
@@ -109,7 +115,7 @@ class ApplicationContainer extends PureComponent {
 
 const mapStateToProps = ({ applications }) => ({ applications })
 
-const mapDispatchToProps = { save : createApplication, fetchApplications: fetchApplications }
+const mapDispatchToProps = { save : createApplication, update: updateApplication, fetchApplications: fetchApplications }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationContainer)
