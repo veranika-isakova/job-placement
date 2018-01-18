@@ -1,6 +1,7 @@
 import {
   FETCHED_APPLICATIONS,
-  CREATED_APPLICATION
+  CREATED_APPLICATION,
+  REMOVED_APPLICATION
 } from '../actions/applications'
 
 export default (state = [], {type, payload} = {}) => {
@@ -9,6 +10,8 @@ export default (state = [], {type, payload} = {}) => {
       return [ ...payload ]
     case CREATED_APPLICATION :
       return [{ ...payload }].concat(state)
+    case REMOVED_APPLICATION :
+      return state
     default :
       return state
   }

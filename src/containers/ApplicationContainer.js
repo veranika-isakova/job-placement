@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetch as fetchApplications } from '../actions/applications'
 import { create as createApplication } from '../actions/applications'
 import { update as updateApplication } from '../actions/applications'
+import { remove as removeApplication} from '../actions/applications'
 import Title from '../components/Title'
 import EditTable from '../components/EditTable'
 import {PropTypes} from 'prop-types'
@@ -89,7 +90,10 @@ class ApplicationContainer extends PureComponent {
     }
 
     const onDelete = (e) => {
-      console.log(e)
+      console.log('delete', e)
+      if (e.row._id !== undefined) {
+        this.props.delete(e.row._id)
+      }
     }
     console.log('apps', this.state.selectedApplications)
     return(
@@ -115,7 +119,7 @@ class ApplicationContainer extends PureComponent {
 
 const mapStateToProps = ({ applications }) => ({ applications })
 
-const mapDispatchToProps = { save : createApplication, update: updateApplication, fetchApplications: fetchApplications }
+const mapDispatchToProps = { save : createApplication, update: updateApplication, delete: removeApplication, fetchApplications: fetchApplications }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationContainer)
