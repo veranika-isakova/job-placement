@@ -10,7 +10,7 @@ install:
   - ps: Install-Product node $env:node_version
   - yarn install --frozen-lockfile
 
-build:
+build_script:
   - yarn build
 
 cache:
