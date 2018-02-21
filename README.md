@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/x2tfmfutx8cbrx1l?svg=true)](https://ci.appveyor.com/project/veranika-isakova/job-placement)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
